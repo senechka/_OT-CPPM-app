@@ -30,13 +30,14 @@ df2 = df2[["Mac-Addresses","Aruba User Role"]].dropna(subset=["Mac-Addresses"])
 #Normalise MACs for CPPM (delete : - . and space simbols) 
 df2["Mac-Addresses"] = df2.loc[:,"Mac-Addresses"].str.replace('[:-]','', regex =True).replace(' ','', regex =True).replace('\.','', regex =True) # FIXME too long ?
 #read template file
-with open("/Users/semenov/Downloads/_1_DANFOSS/Endpoint-clear_templ.xml","r") as xml_template:
+with open("/Users/semenov/Downloads/_1_DANFOSS/_OT-IOT/_OT-CPPM-app/templates/Endpoint-clear_templ.xml","r") as xml_template:
     template_lines=xml_template.readlines()
 xml_template.close
 #write first part of template to OT XML file
-with open("/Users/semenov/Downloads/_1_DANFOSS/OT-CPPM.xml","w") as otxmlfile:
+outputxmlfile = "/Users/semenov/Downloads/_1_DANFOSS/_OT-IOT/OT-CPPM.xml"
+with open(outputxmlfile,"w") as otxmlfile:
     otxmlfile.writelines(template_lines[0:4])
-with open("/Users/semenov/Downloads/_1_DANFOSS/OT-CPPM.xml","a") as otxmlfile:
+with open(outputxmlfile,"a") as otxmlfile:
     for x in range(len(df2)):
     # Check MAC address for other artefacts
         if re.fullmatch("[0-9a-fA-F]{12}$",df2["Mac-Addresses"].values[x]) is not None:
