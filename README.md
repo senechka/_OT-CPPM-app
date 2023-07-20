@@ -12,8 +12,10 @@
 Python application to prepare XML endpoints file for OT devices to import in CPPM.
 	
 ## Setup
-1. Install python and app's required dependencies.
+1. Install python and app's required dependencies. (the APP uses tkinter, if python doesn't see the it, look at https://bobbyhadz.com/blog/python-no-module-named-tkinter)
 2. Copy project files.
+3. Make workdir folfer in the project folder.
+4. Copy there OT template (filled in)
 
 ## Tests
 TBD
@@ -29,6 +31,7 @@ python3 OT-endopoints to CPPM.py
 ```
 Choose OT file (xlsx) as a source for OT devices info.
 Result is inside OT-CPPM.xml
+Both files are in the workdir folder.
 
 ## License
 MIT
@@ -37,5 +40,4 @@ MIT
 Author: Andrey Semenov andrey.semenov@hpe.com
 
 ## Roadmap
-1. Add possibility to choose output dir
-2. Tests 
+1. Tests 
