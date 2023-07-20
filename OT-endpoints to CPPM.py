@@ -4,6 +4,7 @@ Program to prepare Damfoss OT Devices to import the CPPM as endpoints.
 # Imports
 import pandas as pd
 import re
+from pathlib import Path
 # Import tkinter to open file
 import tkinter as tk
 from tkinter import filedialog 
@@ -16,7 +17,8 @@ def openotfile():
     #Choose OT file
     root = tk.Tk()
     root.withdraw
-    path = filedialog.askopenfile(initialdir="/Users/semenov/Downloads/_1_DANFOSS/", title="Select file",
+    print (Path.cwd())
+    path = filedialog.askopenfile(initialdir=Path() / 'workdir/', title="Select file",
                     filetypes=(("XLS files", "*.xlsx"),("all files", "*.*")))
     return (path.name)
 #Read OT sheet from file (if there is no tkinter installed, please change function call openotfile() to full path name)
@@ -30,11 +32,11 @@ df2 = df2[["Mac-Addresses","Aruba User Role"]].dropna(subset=["Mac-Addresses"])
 #Normalise MACs for CPPM (delete : - . and space simbols) 
 df2["Mac-Addresses"] = df2.loc[:,"Mac-Addresses"].str.replace('[:-]','', regex =True).replace(' ','', regex =True).replace('\.','', regex =True) # FIXME too long ?
 #read template file
-with open("/Users/semenov/Downloads/_1_DANFOSS/_OT-IOT/_OT-CPPM-app/templates/Endpoint-clear_templ.xml","r") as xml_template:
+with open(Path() / 'templates/Endpoint-clear_templ.xml',"r") as xml_template:
     template_lines=xml_template.readlines()
 xml_template.close
 #write first part of template to OT XML file
-outputxmlfile = "/Users/semenov/Downloads/_1_DANFOSS/_OT-IOT/OT-CPPM.xml"
+outputxmlfile = Path() / 'workdir/OT-CPPM.xml'
 with open(outputxmlfile,"w") as otxmlfile:
     otxmlfile.writelines(template_lines[0:4])
 with open(outputxmlfile,"a") as otxmlfile:
