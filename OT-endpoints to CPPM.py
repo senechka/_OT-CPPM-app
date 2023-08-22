@@ -24,10 +24,11 @@ def openotfile():
 df=pd.read_excel(openotfile(), sheet_name='OT Endpoint MAC Addresses',index_col=False)
 df.columns = df.iloc[3]
 df2 = df.tail(-4)
+df2 = df2[["Mac-Addresses","Aruba User Role"]]
+#Choose only MAC and Roles columns and drop lines with empty MACs
+df2 = df2[["Mac-Addresses","Aruba User Role"]].dropna(subset=["Mac-Addresses"]).dropna(subset=["Aruba User Role"])
 # Choose only rows started with "OT-""
 df2 = df2.loc[df2["Aruba User Role"].str.startswith('OT-')]
-#Choose only MAC and Roles columns and drop lines with empty MACs
-df2 = df2[["Mac-Addresses","Aruba User Role"]].dropna(subset=["Mac-Addresses"])
 #Normalise MACs for CPPM (delete : - . and space simbols) 
 df2["Mac-Addresses"] = df2.loc[:,"Mac-Addresses"].str.replace('[:-]','', regex =True).replace(' ','', regex =True).replace('\.','', regex =True) # FIXME too long ?
 #read template file
